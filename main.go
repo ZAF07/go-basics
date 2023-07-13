@@ -3,17 +3,17 @@ package main
 import (
 	"fmt"
 
-	"github.com/ZAF07/go-basics/composition"
+	entity "github.com/ZAF07/go-basics/composition/living-entity"
 )
 
 func main() {
-	shark := composition.NewBiter("sharkboy", 2)
-	human := composition.NewNonBiter("human guy")
+	shark := entity.NewBiter("sharkboy", 2)
+	human := entity.NewNonBiter("human guy")
 	fmt.Println(shark)
 	fmt.Println(human)
 
-	// shark.Bite(human)
+	shark.Bite(human)
 	fmt.Println(human)
-	a := human.GetName() // If both the embedded struct and the struct that embeds the struct has the same method, Go will usee the struct's method instead
-	fmt.Println(a)
+	humanName := human.GetName() // If both the embedded struct and the struct that embeds the struct has the same method, Go will usee the struct's method instead
+	fmt.Println(humanName)
 }
