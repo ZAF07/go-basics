@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/ZAF07/go-basics/concurrency"
 )
 
@@ -30,4 +32,6 @@ func main() {
 	// fmt.Println(p2)
 
 	concurrency.RoutineMethod()
+	res := concurrency.PipelineChallenge()
+	fmt.Println(res)
 }
