@@ -17,6 +17,7 @@ var unsorted = [][]int{{5, 4, 3, 2, 1}, {8, 2, 9, 8, 5, 1}, {0, 9, 6, 8, 3, 6, 0
 // Goroutine to handle sorting each array element
 func RoutineMethod() [][]int {
 	// Create a channel for the goroutines to communicate with each other with
+	// Becasue we have a buffered channel, we are not blocking the goroutine
 	result := make(chan []int, len(unsorted))
 	// Wait group allows goroutines to wait on each other
 	wg := sync.WaitGroup{}
