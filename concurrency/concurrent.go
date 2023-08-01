@@ -6,7 +6,7 @@ import (
 
 /*
 Note:
-goroutines are only usefull when performing heavy tasks. In thsi small example,  it might just be better to use a regular function to execute the task.
+goroutines are only usefull when performing heavy tasks. In this small example,  it might just be better to use a regular function to execute the task.
 This is because it takes time and resources to spawn goroutines and waitgroups.
 A better implementation might be when we want to perform multiple HTTP requests or when trying to save data into a database for example.
 Think about the overhead cost when implementing goroutines.
@@ -16,9 +16,10 @@ var unsorted = [][]int{{5, 4, 3, 2, 1}, {8, 2, 9, 8, 5, 1}, {0, 9, 6, 8, 3, 6, 0
 
 // Goroutine to handle sorting each array element
 func RoutineMethod() [][]int {
-	// Create a channel for the goroutines to communicate with each other with
-	// Becasue we have a buffered channel, we are not blocking the goroutine
+	// Create a channel for the goroutines to communicate with each
+	// Becasue we have a buffered channel, we are not blocking the sending goroutine
 	result := make(chan []int, len(unsorted))
+
 	// Wait group allows goroutines to wait on each other
 	wg := sync.WaitGroup{}
 
