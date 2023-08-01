@@ -2,6 +2,7 @@ package concurrency
 
 /* Pipelines
 Pipelines are simply a technique in concurrent programming which allows us to break down a large problem into smaller problems and solve them concurrently
+If done properly, this could help improve the performance of our applications
 
 Let's create a challenge to test your knowledge of pipelines in Go. The challenge is to implement a simple data processing pipeline that reads a list of integers, filters out the even numbers, squares the remaining odd numbers, and then sums them up.
 */
@@ -47,7 +48,7 @@ func sumIntegers(nums <-chan int) <-chan int {
 // It spawns a goroutine (thread runs in the background) and passes the filtered values into that channel
 // Before the goroutine completes, this function has already exited the call stack with the goroutine still running in the background
 // 💡 Becaue the channel is unbuffered, each time this goroutine sends a value to the channel, it gets blocked until the receiver successfully finishes processing the value 💡
-// It only closes the channel when it has finished looping all the contents in the data slice
+// It only closes the channel when it has finished writing to the channel
 func filterEvenInts(data []int, fChan chan int) {
 	go func() {
 		for _, val := range data {
