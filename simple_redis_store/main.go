@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"sync"
 	"time"
 )
@@ -11,15 +10,18 @@ This is an experiment to create an in-memory store like redis using Go
 */
 
 func main() {
-	rd := NewRedisStore()
+	// rd := NewRedisStore()
 
-	ttl := 1 * time.Second
-	ttl2 := 7 * time.Second
-	rd.Set("test key", "Test value", ttl)
-	rd.Set("test key 2", "Test value 2", ttl2)
-	fmt.Printf("%+v\n", rd.items)
-	time.Sleep(5 * time.Second)
-	fmt.Printf("%+v\n", rd.items)
+	// ttl := 1 * time.Second
+	// ttl2 := 7 * time.Second
+	// rd.Set("test key", "Test value", ttl)
+	// rd.Set("test key 2", "Test value 2", ttl2)
+	// fmt.Printf("%+v\n", rd.items)
+	// time.Sleep(5 * time.Second)
+	// fmt.Printf("%+v\n", rd.items)
+
+	// PQ version
+	Testing()
 }
 
 // Create the struct that represents the in-memory store
