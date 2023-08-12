@@ -21,7 +21,7 @@ func main() {
 	// fmt.Printf("%+v\n", rd.items)
 
 	// PQ version
-	Testing()
+	PriorityQCache()
 }
 
 // Create the struct that represents the in-memory store
