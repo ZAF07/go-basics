@@ -17,7 +17,7 @@ func PipelineChallenge() int {
 	// Stage 1: Filter out the even numbers
 	filterEvenInts(data, fChan)
 
-	// Stage 2: Sum up the odd numbers
+	// Stage 2: Sum up the square of remaining odd numbers
 	sum := sumIntegers(fChan)
 
 	var result int
@@ -53,7 +53,8 @@ func filterEvenInts(data []int, fChan chan int) {
 	go func() {
 		for _, val := range data {
 			if val%2 != 0 {
-				fChan <- val
+				// Return the squared result of each int (multiplying int by itself is the square of the int)
+				fChan <- val * val
 			}
 		}
 		close(fChan)
