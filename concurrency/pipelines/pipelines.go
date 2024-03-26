@@ -1,4 +1,4 @@
-package concurrency
+package pipelines
 
 /* Pipelines
 Pipelines are simply a technique in concurrent programming which allows us to break down a large problem into smaller problems and solve them concurrently

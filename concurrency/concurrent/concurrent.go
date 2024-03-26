@@ -1,4 +1,5 @@
-package concurrency
+// package concurrency
+package concurrent
 
 import (
 	"sync"

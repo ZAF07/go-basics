@@ -1,4 +1,6 @@
-package concurrency
+package concurrent
+
+// package concurrency
 
 import "testing"
 
