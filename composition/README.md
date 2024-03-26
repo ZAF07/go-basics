@@ -22,7 +22,7 @@ type Car struct {
 
 func main() {
     c := Car{}
-    c.Wheel.Method() // Accessing the Method of the embedded Wheel struct
+    c.Method() // Accessing the Method of the embedded Wheel struct
 }
 ```
 
