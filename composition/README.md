@@ -15,6 +15,10 @@ type Wheel struct {
     // Wheel properties...
 }
 
+func (w Wheel) GetColor() int {
+    return "Green"
+}
+
 type Car struct {
     Wheel // Embedding the Wheel struct
     // Other Car properties...
@@ -22,7 +26,7 @@ type Car struct {
 
 func main() {
     c := Car{}
-    c.Method() // Accessing the Method of the embedded Wheel struct
+    c.GetColor() // Accessing the Method of the embedded Wheel struct
 }
 ```
 
