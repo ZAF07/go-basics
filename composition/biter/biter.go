@@ -6,7 +6,7 @@ import (
 	entity "github.com/ZAF07/go-basics/composition/living-entity"
 )
 
-// Fields are not exported because we want this properties to be private (so nobody from the outside can call them directly, hence reduced vulnerabilities and bugs)
+// Fields are not exported because we want this properties to be private (so nobody from the outside can call them directly, hence reducing vulnerabilities and runtime bugs)
 type biter struct { // Struct is also private, so it cant be used standalone in any case which may introduce bugs
 	biteForce            int
 	entity.ILivingEntity // 💡 Embedded anonymous field containing the entity struct. This makes the Nonbiter struct looks like it inherits from the entity stuct. But it does not! It only allows us to call properties and methods of the embedded struct like it belongs to the child struct
