@@ -12,6 +12,12 @@ type Redis struct {
 	expiration *ExpirationHeap
 }
 
+type values struct {
+	value   interface{}
+	ttl     time.Duration
+	expires time.Time
+}
+
 func NewCache() *Redis {
 	store := make(map[string]*values)
 	expiration := &ExpirationHeap{}
@@ -22,20 +28,17 @@ func NewCache() *Redis {
 	}
 }
 
-type values struct {
-	value   interface{}
-	ttl     time.Duration
-	expires time.Time
-}
-
 // Gets a key:value from the cache. It checks if the value's expired time is after the current time before returning the key
 func (r *Redis) get(k string) *values {
 	now := time.Now()
 	if val, ok := r.items[k]; ok {
 		if now.After(val.expires) {
-			log.Println("KEY HAS EXPITED")
+			log.Println("🚨 KEY HAS EXPITED IN GET")
 			return nil
 		}
+	} else {
+		fmt.Println("🚨 KEY IS NOT IN MEMORY: ", k)
+		return nil
 	}
 	return r.items[k]
 }
@@ -50,7 +53,10 @@ func (r *Redis) set(k string, v interface{}, t time.Duration) {
 		expires: expTime,
 	}
 
+	// Set the k:v pair into the Redis struct
 	r.items[k] = &newValues
+
+	// Push the key of the new item into the min heap data structure. This is used later in the interval to delete those expired items from the Redis struct items map
 	heap.Push(r.expiration, &expirationItem{
 		key:      k,
 		expireAt: expTime,
@@ -60,12 +66,18 @@ func (r *Redis) set(k string, v interface{}, t time.Duration) {
 // Loops through the min heap, once it finds a item whose exp time is later than the current time, it stops the loop
 func (r *Redis) removeExpired() {
 	now := time.Now()
+	// As long as there are items in the min heap, we keep going
 	for r.expiration.Len() > 0 {
+		// At each iteration, we pop the min value from the heap ({key, expiration Time})
 		item := heap.Pop(r.expiration).(*expirationItem)
+
+		// If current time is < the min heap's min value's expired time, we push the item back into the heao and break the loop. This signifies that the min item in the heap is still not expired (meaning that the rest of the items are also still valid and should be kept)
 		if now.Before(item.expireAt) {
 			heap.Push(r.expiration, item)
 			break
 		}
+		// Perform deletion of k:v from the Redis struct storing all k:v pairs
+		fmt.Println("DELETING KEY: ", item.key)
 		delete(r.items, item.key)
 	}
 }
@@ -76,6 +88,7 @@ func (r *Redis) StartCleanInterval() {
 	ticker := time.NewTicker(2 * time.Second)
 	// quit := make(chan struct{})
 	go func() {
+		defer ticker.Stop()
 		for t := range ticker.C {
 			fmt.Println("⏰ t running: ", t)
 			r.removeExpired()
@@ -104,7 +117,7 @@ func PriorityQCache() {
 
 	// Getting a value for testing
 	res := cache.get("test key")
-	fmt.Println("result:", res)
+	fmt.Println("result 'test key':", res.value.(string))
 	fmt.Println("results:", cache.items)
 
 	// Simulate running time
