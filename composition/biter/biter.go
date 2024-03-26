@@ -15,7 +15,7 @@ type Biter struct {
 }
 
 func NewBiter(name string, bf int) *Biter {
-	// Using 'value' struct literal. (Have to pass the parameters in order of the struct fields in declarations)
+	// Using 'value' struct literal. (Have to pass the parameters in order of the struct fields in declaration of struct type)
 	return &Biter{
 		bf,
 		entity.NewLivingentity(name, 15),
