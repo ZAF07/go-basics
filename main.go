@@ -1,24 +1,16 @@
 package main
 
 import (
+	"container/heap"
 	"fmt"
 
-	"github.com/ZAF07/go-basics/concurrency"
+	q "github.com/ZAF07/go-basics/priority-queue"
 )
 
 // entity "github.com/ZAF07/go-basics/composition/living-entity"
 // singleton "github.com/ZAF07/go-basics/sync/sync-once"
 
 func main() {
-	// shark := entity.NewBiter("sharkboy", 2)
-	// human := entity.NewNonBiter("human guy")
-	// fmt.Println(shark)
-	// fmt.Println(human)
-
-	// shark.Bite(human)
-	// fmt.Println(human)
-	// humanName := human.GetName() // If both the embedded struct and the struct that embeds the struct has the same method, Go will usee the struct's method instead
-	// fmt.Println(humanName)
 
 	// // SYNC.ONCE
 	// // Call the NewPewrson function. This causes sync.Once to register that the NewPerson has ran ONE TIME. It will NOT run again
@@ -31,7 +23,43 @@ func main() {
 	// p2 := singleton.NewPerson()
 	// fmt.Println(p2)
 
-	concurrency.RoutineMethod()
-	res := concurrency.PipelineChallenge()
-	fmt.Println(res)
+	// PQ (unrelated to concurrency)
+	w := q.NewPQ()
+	fmt.Println("Before push: ", w)
+	a := q.PriorityItem{
+		Value:   3,
+		StringV: "3",
+	}
+
+	b := q.PriorityItem{
+		Value:   1,
+		StringV: "11",
+	}
+
+	c := q.PriorityItem{
+		Value:   4,
+		StringV: "4",
+	}
+
+	d := q.PriorityItem{
+		Value:   2,
+		StringV: "66",
+	}
+
+	heap.Push(w, &a)
+	heap.Push(w, &b)
+	heap.Push(w, &c)
+	heap.Push(w, &d)
+
+	fmt.Printf("after push: %+v\n", w)
+	fmt.Println("peek --> ", w.Peek())
+	ap := w.Pop()
+	bp := w.Pop()
+	cp := w.Pop()
+	dp := w.Pop()
+
+	fmt.Println("❌", ap)
+	fmt.Println("❌", bp)
+	fmt.Println("❌", cp)
+	fmt.Println("❌", dp)
 }
