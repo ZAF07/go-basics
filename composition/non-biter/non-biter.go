@@ -4,7 +4,7 @@ import (
 	entity "github.com/ZAF07/go-basics/composition/living-entity"
 )
 
-type NonBiter struct {
+type nonBiter struct {
 	entity.ILivingEntity // Embedded anonymous field containing the entity struct. This makes the NonBiter struct looks like it inherits from the entity stuct. But it does not! It only allows us to call properties and methods of the embedded struct like it belongs to the child struct
 }
 
@@ -16,8 +16,8 @@ type NonBiter struct {
 // 	return "Haha"
 // }
 
-func NewNonBiter(name string) *NonBiter {
-	return &NonBiter{
+func NewNonBiter(name string) *nonBiter {
+	return &nonBiter{
 		entity.NewLivingentity(name, 10),
 	}
 }
