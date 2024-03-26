@@ -1,5 +1,5 @@
 CONCURRENCY_TYPE=""
-go-concurrent:
+go-concurrency:
 	@if [ $(CONCURRENCY_TYPE) = "CONCURRENT" ]; then\
 		go run concurrency/main.go concurrent;\
 	elif [ $(CONCURRENCY_TYPE) = "PIPELINE" ]; then\
