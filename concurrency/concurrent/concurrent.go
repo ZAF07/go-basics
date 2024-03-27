@@ -18,7 +18,7 @@ var unsorted = [][]int{{5, 4, 3, 2, 1}, {8, 2, 9, 8, 5, 1}, {0, 9, 6, 8, 3, 6, 0
 // Goroutine to handle sorting each array element
 func RoutineMethod() [][]int {
 	// Create a channel for the goroutines to communicate with each
-	// Becasue we have a buffered channel, we are not blocking the sending goroutine
+	// Becasue we have a buffered channel, we are not blocking the sending goroutine (This is because there is space for new items in the buffer. The sending goroutine can simply send the data and go on doing what it needs to do)
 	result := make(chan []int, len(unsorted))
 
 	// Wait group allows goroutines to wait on each other
@@ -33,14 +33,15 @@ func RoutineMethod() [][]int {
 
 	// Running the wait and close channel in a seperate goroutine so that the main goroutine can continue with other operations while waiting
 	go func() {
-		// Wait first
+		// Wait to close the channel. Closing the channel causes the main goroutine (RoutineMethod()) to terminate
 		wg.Wait()
-		// After done waiting, close the channel
+		// After done waiting, close the channel. This will cause the RoutineMethod() to terminate
 		close(result)
 	}()
 
 	final := [][]int{}
 	// Range the channel where the goroutine sends the sorted array to and append to the final array to send to caller
+	// This main goroutine is blocked here by looping over the channel and does not terminate. Look above inside the goroutine where we call wg.wait and close(result) for more information on how this main routime does not terminate
 	for val := range result {
 		final = append(final, val)
 	}
